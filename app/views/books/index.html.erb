@@ -1,0 +1,48 @@
+<!--　bookのindexページ　-->
+<h1>Books</h1>
+
+<table>
+  <thead>
+    <th>Title</th>
+    <th>Body</th>
+    <th></th>
+  </thead>
+
+  <tbody>
+    <% @books.each do |book| %>
+    <tr>
+      <td><nobr><%= book.title %></nobr></td>
+      <td><nobr><%= book.body %></nobr></td>
+      <td><span><%= link_to "Show", book_path(book.id) %></span></td>
+      <td><sapn><%= link_to "Edit", edit_book_path(book.id) %></span></td>
+      <td><span><%= link_to "Destroy", book_path(book.id), method: :delete, "data-confirm" => "Are you sure?" %></span></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<!--　投稿失敗時のエラー表示　-->
+<% if @book.errors.any? %>
+<%= @book.errors.count %>errors prohibited this book from being saved:
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h2>New book</h2>
+<!--　bookの新規登録機能　-->
+<%= form_with model: @book do |f| %>
+
+  Title
+  <br>
+  <%= f.text_field :title %>
+  <br>
+  Body
+  <br>
+  <%= f.text_area :body %>
+  <br>
+  <%= f.submit 'Create Book' %>
+
+<% end %>
